@@ -1,0 +1,20 @@
+[tool.pytest.ini_options]
+minversion = "7.0"
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | build
+  | dist
+)/
+'''
+
+[tool.coverage.run]
+omit = [
+    "tests/*"
+]

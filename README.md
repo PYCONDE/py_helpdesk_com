@@ -13,7 +13,7 @@ git clone
 cd py_helpdesk_com
 ```
 
-Required packages are listed in `[environment.yml](environment.yml)`.
+Required packages are listed in `environment.yml`.
 
 ```
 conda con create --file environment.yml
@@ -49,7 +49,7 @@ python init.py
 
 Check `./docs_cache` for:
 - [teams.json](docs_cache/teams.json)
-- agent_id, see [teams.json](docs_cache/teams.json)
+- [agents.json](docs_cache/agents.json)
 
 
 ## Structure
@@ -72,7 +72,7 @@ Required:
 
 - name: (full) name
 - email
--
+
 
 Optional:
 
@@ -117,7 +117,7 @@ Cheers!
 ```
 
 ```python
-    test_recipients = [
+test_recipients = [
     Recipient(name="Peter Parker", email="spidi@web", address_as="Spiderman"),
     Recipient(name="Bruce Wayne", email="bruce@wayneindustries.com", address_as="Bruce"),
     Recipient(name="Batman", email="bat@man.com", address_as="Bruce"),

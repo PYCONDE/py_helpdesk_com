@@ -8,6 +8,7 @@ dependencies:
   - pytest=7
   - omegaconf=2.3
   - pydantic=1
+  - black
   - pip=22
   - pip:
     #installed via pip install 'pydantic[email]'

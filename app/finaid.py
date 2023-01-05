@@ -6,7 +6,6 @@ class PyHelpDeskFinAid2023(PyHelpDesk):
     Methods used for handling Fin Aid
     """
 
-
     def get_tickets_tagged(self, tags):
         """
         Agents can add tags to tickets.
@@ -25,9 +24,7 @@ class PyHelpDeskFinAid2023(PyHelpDesk):
         # OR-SEARCH: this will find any ticket with any of the tags
         tickets = self.get_tickets(params)
         tickets = [x for x in tickets if all([y in x.get("tagIDs") for y in tag_ids])]
-        granted_tickets = [
-            x for x in tickets if not (set(x.get("tagIDs")) & excluded_tag_ids)
-        ]
+        granted_tickets = [x for x in tickets if not (set(x.get("tagIDs")) & excluded_tag_ids)]
         return granted_tickets
 
     def get_all_tickets_online_accepted(self):

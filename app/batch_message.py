@@ -9,6 +9,7 @@ class Recipient(BaseModel):
     """
     How to address and contact a person.
     """
+
     name: str
     email: str
     address_as: str = ""  # could be the first name
@@ -23,6 +24,7 @@ class BatchMessage(BaseModel):
     """
     Same message to be sent to a list of Recipients
     """
+
     subject: str
     message_text: str
     team_id: str
@@ -45,6 +47,7 @@ class BatchMessage(BaseModel):
 
 class PyHelpDeskMailing(PyHelpDesk):
     """Create a mass mailings by a given input"""
+
     def __init__(self, api_credentials: DictConfig, batch_message: BatchMessage):
         super().__init__(api_credentials)
         self.message: BatchMessage = batch_message
@@ -107,7 +110,6 @@ if __name__ == "__main__":
         agent_id="2d8b5727-49c8-410d-bae8-0da13a65609d",  # Program
         status="solved",
         recipients=test_recipients,
-
     )
     mailing = PyHelpDeskMailing(CONFIG.api_credentials, test_message)
     mailing.batch_message()

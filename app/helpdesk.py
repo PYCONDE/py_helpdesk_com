@@ -22,9 +22,7 @@ class PyHelpDesk:
     """Basic functionalities for Helpdesk interactions."""
 
     def __init__(self, api_credentials: DictConfig):
-        self.authentication = HTTPBasicAuth(
-            api_credentials.account, api_credentials.token
-        )
+        self.authentication = HTTPBasicAuth(api_credentials.account, api_credentials.token)
         self.all_tags = []
         self._teams = {}  # dict with teams by name and ID
         self._agents = {}  # dict with agent by name and ID
@@ -38,9 +36,7 @@ class PyHelpDesk:
         if not params:
             params = {}
 
-        res = requests.get(
-            url, auth=self.authentication, params=params, headers=headers
-        )
+        res = requests.get(url, auth=self.authentication, params=params, headers=headers)
         if res.status_code == 200:
             return res.json()
         raise APIException(
@@ -122,9 +118,7 @@ class PyHelpDesk:
         )
         return res
 
-    def tickets_by_date_range(
-        self, from_date: datetime.datetime = None, to_date: datetime.datetime = None
-    ):
+    def tickets_by_date_range(self, from_date: datetime.datetime = None, to_date: datetime.datetime = None):
         params = {}
         if from_date:
             params["createdDateFrom"] = self.api_iso_timestamp(from_date)
@@ -194,11 +188,7 @@ class PyHelpDesk:
                 "normal",
                 "owner",
             ]  # active agents only - filter inactive / watchers
-            return {
-                k["name"]: k["ID"]
-                for k in _list
-                if any([r in k["roles"] for r in roles])
-            }
+            return {k["name"]: k["ID"] for k in _list if any([r in k["roles"] for r in roles])}
 
         self._agents = self._update("agents", self.helpdesk_agents, filter_agents)
 
@@ -246,5 +236,3 @@ class PyHelpDesk:
     def init(self):
         self.update_agents()
         self.update_teams()
-
-

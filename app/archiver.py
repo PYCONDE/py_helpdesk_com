@@ -14,9 +14,7 @@ class PyHelpDeskCleaner(PyHelpDesk):
     DANGER ZONE! Can delete tickets, handle with care!
     """
 
-    def archive_old_tickets(
-        self, include_teams: list[str], to_date: datetime, *, yield_results=False
-    ):
+    def archive_old_tickets(self, include_teams: list[str], to_date: datetime, *, yield_results=False):
         """Archive tickets from previous conferences.
 
         Args:
@@ -34,17 +32,13 @@ class PyHelpDeskCleaner(PyHelpDesk):
             raise ValueError(f"Never delete tickets younger than {threshold} days")
         params = {"createdDateTo": self.api_iso_timestamp(to_date)}
         for i, team_id in enumerate(include_teams):
-            params[
-                "teamIDs[]"
-            ] = team_id  # team the ticket is visible to, teamIDs params requires [] notation
+            params["teamIDs[]"] = team_id  # team the ticket is visible to, teamIDs params requires [] notation
             team_tickets = self.get_tickets(params)
             if not team_tickets:
                 print(f"{self.teams[team_id]} has nothing left to be archived")
                 continue
             archive_name = f"a_{self.teams[team_id]}_{self.api_iso_timestamp(to_date)}_{i:02d}_{uuid4().hex[:4]}.json"
-            archive_name = archive_name.replace("/", "-").replace(
-                ":", "-"
-            )  # remove chars use in paths
+            archive_name = archive_name.replace("/", "-").replace(":", "-")  # remove chars use in paths
             with (CONFIG["archive_path"] / archive_name).open("w") as f:
                 print(f"{self.teams[team_id]} archiving {len(team_tickets)}")
                 json.dump(team_tickets, f)
@@ -53,9 +47,7 @@ class PyHelpDeskCleaner(PyHelpDesk):
 
     def archive_and_delete_tickets(self, include_teams: list[str], to_date: datetime):
         """Wrapper to archive and delete in on step."""
-        for tickets_archived in self.archive_old_tickets(
-            include_teams, to_date, yield_results=True
-        ):
+        for tickets_archived in self.archive_old_tickets(include_teams, to_date, yield_results=True):
             tickets_ids_to_delete = [x["ID"] for x in tickets_archived]
             print(f"deleting {len(tickets_ids_to_delete)}")
             self.delete_tickets(tickets_ids_to_delete)
@@ -74,9 +66,7 @@ class PyHelpDeskCleaner(PyHelpDesk):
                 print(f"{ticket_id}: {e}")
 
     def delete_ticket(self, ticket_id: str):
-        res = requests.delete(
-            f"https://api.helpdesk.com/v1/tickets/{ticket_id}", auth=self.authentication
-        )
+        res = requests.delete(f"https://api.helpdesk.com/v1/tickets/{ticket_id}", auth=self.authentication)
         return res
 
     def standard_maintenance(self, year):
