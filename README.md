@@ -143,6 +143,28 @@ mailing.batch_message()
 
 ```
 
+##### Adding More Attributes in Message
+
+Both `BatchMessage` and `Recipient` models support adding extra attributes. 
+
+If you want to add some extra custom text to the message you can simply:
+
+```python
+# add girlfriend
+recipients = [Recipient(name="Peter Parker", email="spidi@web", address_as="Spiderman", girlfriend="Mary Jane")]
+# message with custom attribute in recipient
+custom_message = BatchMessage(
+    message_text="""Hello {recipient.address_as},
+        Send our regards to your girlfriend {recipient.girlfriend}
+        Cheers!
+        """,
+    recipients=recipients,
+    ...
+)
+mailing = PyHelpDeskMailing(CONFIG.api_credentials, test_message)
+mailing.batch_message()
+```
+
 ### PyHelpDeskFinAid2023
 
 Do not use, in review / refactoring
