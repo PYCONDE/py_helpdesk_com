@@ -1,0 +1,15 @@
+name: py_helpdesk_com
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - requests=2
+  - pytest=7
+  - omegaconf=2.3
+  - pydantic=1
+  - pip=22
+  - pip:
+    #installed via pip install 'pydantic[email]'
+    - dnspython==2.2.1
+    - email-validator==1.3.0
