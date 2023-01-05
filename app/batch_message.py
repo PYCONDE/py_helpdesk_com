@@ -1,11 +1,11 @@
 from omegaconf import DictConfig
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Extra
 
 from app import CONFIG
 from app.helpdesk import PyHelpDesk
 
 
-class Recipient(BaseModel):
+class Recipient(BaseModel, extra=Extra.allow):
     """
     How to address and contact a person.
     """
@@ -20,7 +20,7 @@ class Recipient(BaseModel):
         super().__init__(**data)
 
 
-class BatchMessage(BaseModel):
+class BatchMessage(BaseModel, extra=Extra.allow):
     """
     Same message to be sent to a list of Recipients
     """
@@ -89,4 +89,27 @@ class PyHelpDeskMailing(PyHelpDesk):
         customized_message = self.message.message_text.format(recipient=recipient, self=self)
         return customized_message
 
+if __name__ == "__main__":
+    test_recipients = [
+        Recipient(name="Alexander Hendorf", email="alexander@hendorf.com", address_as="Alex", custom_stuff="X"),
+        Recipient(name="Christian Hendorf", email="python@hendorf.com"),
+        Recipient(name="Florian Wilhelm", email="Florian.Wilhelm@inovex.de", address_as="Flo"),
+        Recipient(name="Matthias Hofmann", email="matthias.j.hofmann@gmx.de", address_as="Matthias"),
+    ]
+    test_message = BatchMessage(
+        subject="API TEST: Ignore this message",
+        message_text="""Hello {recipient.address_as},
+        This is an automated test message via our helpdesk!
+        Looks like we are getting somewhere?
+        Hope it's ok to call you {recipient.address_as} and not by your full {recipient.name}.
+        Have you read the email's subject '{self.message.subject}'?
+        Cheers!
+        """,
+        team_id="3f68251e-17e9-436f-90c3-c03b06a72472",  # Program
+        agent_id="2d8b5727-49c8-410d-bae8-0da13a65609d",  # Program
+        status="solved",
+        recipients=test_recipients,
+    )
+    mailing = PyHelpDeskMailing(CONFIG.api_credentials, test_message)
+    mailing.batch_message()
 
