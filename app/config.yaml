@@ -1,0 +1,20 @@
+api_credentials:
+    "account": "SET in _private/config.yaml"
+    "entity_id": "SET in _private/config.yaml"
+    "token": "SET in _private/config.yaml"
+
+# to avoid repetive calls, cache docs in a folder in root
+# example: Team Ids
+# directory name below in project root or full path
+docs_cache: docs_cache
+
+# errorlog (optional)
+# log processing errors to a file
+# useful to follow single errors while not terminating a longer process, e.g. bulk updates
+# resides in project root
+log: "pyhelpdesk.log"
+
+# archive (optional)
+# removed tickets from conf / backups
+# directory name below in project root or full path
+archive: null
