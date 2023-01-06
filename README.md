@@ -34,8 +34,9 @@ api_credentials:
 
 Store your credentials in `_private/config.yaml`
 
-**Use the same (shared) email you use to log into helpdesk to create the token".
+**Use the same (shared) email you use to log into helpdesk to create the token".**
 See here how to create:  https://www.youtube.com/watch?v=-EUZ_Ynvz5Q&t=32s
+In case there are problems with livechat subscription trails, contact an helpdesk admin.
 
 ## Init
 You need some additional ids to interact with helpdesk, as team and agent IDs.
@@ -43,8 +44,10 @@ You need some additional ids to interact with helpdesk, as team and agent IDs.
 Run this once you have your API credentials.
 
 ```bash
-cd app
-python init.py
+# make sure to set the PYTHONPATH, apps like PyCharm will handle this for you.
+export PYTHONPATH=`pwd`
+
+python app/init.py
 ```
 
 Check `./docs_cache` for:
